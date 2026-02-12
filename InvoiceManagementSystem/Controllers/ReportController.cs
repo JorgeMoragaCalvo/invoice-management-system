@@ -20,8 +20,12 @@ public class ReportController : ControllerBase
     }
 
     /// <summary>
-    /// Get overdue invoices report (30+ days overdue, no payment, no credit notes)
+    /// Get overdue invoices report
     /// </summary>
+    /// <remarks>
+    /// Returns consistent invoices more than 30 days overdue without payment or credit notes
+    /// </remarks>
+    /// <response code="200">Report generated successfully</response>
     [HttpGet("overdue")]
     [ProducesResponseType(typeof(List<InvoiceEntity>), StatusCodes.Status200OK)]
     public async Task<IActionResult> GetOverdueReport()
@@ -33,6 +37,10 @@ public class ReportController : ControllerBase
     /// <summary>
     /// Get payment status summary (count and percentage by status)
     /// </summary>
+    /// <remarks>
+    /// Returns count and percentage of invoices grouped by payment status (Paid, Pending, Overdue)
+    /// </remarks>
+    /// <response code="200">Summary generated successfully</response>
     [HttpGet("payment-summary")]
     [ProducesResponseType(typeof(List<PaymentStatusSummaryDTO>), StatusCodes.Status200OK)]
     public async Task<IActionResult> GetPaymentStatusSummary()
@@ -44,6 +52,10 @@ public class ReportController : ControllerBase
     /// <summary>
     /// Get inconsistent invoices report
     /// </summary>
+    /// <remarks>
+    /// Returns all invoices where the total amount does not match the sum of product subtotals
+    /// </remarks>
+    /// <response code="200">Report generated successfully</response>
     [HttpGet("inconsistent")]
     [ProducesResponseType(typeof(List<InvoiceEntity>), StatusCodes.Status200OK)]
     public async Task<IActionResult> GetInconsistentReport()
