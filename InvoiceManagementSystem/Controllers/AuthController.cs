@@ -1,6 +1,6 @@
-using ManagemententSystem.Data;
-using ManagemententSystem.DTOs;
-using ManagemententSystem.Services;
+using InvoiceManagementSystem.Data;
+using InvoiceManagementSystem.DTOs;
+using InvoiceManagementSystem.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;

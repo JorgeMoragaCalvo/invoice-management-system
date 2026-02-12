@@ -1,4 +1,4 @@
-using InvoiceManagemententSystem.DTOs;
+using InvoiceManagementSystem.DTOs;
 using InvoiceManagementSystem.Entities;
 using InvoiceManagementSystem.Services;
 using Microsoft.AspNetCore.Authorization;
