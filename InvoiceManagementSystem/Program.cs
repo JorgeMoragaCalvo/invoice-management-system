@@ -24,6 +24,7 @@ builder.Services.AddScoped<ReportService>();
 // --- Data Seeder (runs on startup) ---
 builder.Services.AddHostedService<DataSeeder>();
 
+// --- JWT Authentication ---
 var jwtSecret = builder.Configuration["Jwt:Secret"]!;
 var keyBytes = Convert.FromBase64String(jwtSecret);
 
@@ -64,6 +65,10 @@ builder.Services.AddSwaggerGen(options =>
         Title = "Invoice Management System API",
         Version = "1.0"
     });
+
+    // Include XML comments in Swagger (reads /// <summary>, <remarks>, <response> tags)
+    var xmlFilename = $"{System.Reflection.Assembly.GetExecutingAssembly().GetName().Name}.xml";
+    options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFilename));
 
     options.AddSecurityDefinition("bearerAuth", new OpenApiSecurityScheme
     {
