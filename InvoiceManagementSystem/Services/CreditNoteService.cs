@@ -1,4 +1,4 @@
-using ManagementSystem.DTOs;
+using InvoiceManagementSystem.DTOs;
 using InvoiceManagementSystem.Entities;
 using InvoiceManagementSystem.Data;
 using Microsoft.EntityFrameworkCore;

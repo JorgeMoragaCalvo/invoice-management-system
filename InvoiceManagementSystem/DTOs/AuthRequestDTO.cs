@@ -1,4 +1,4 @@
-namespace InvoiceManagamentSystem.DTOs
+namespace InvoiceManagementSystem.DTOs
 {
     public class AuthRequestDTO
     {

@@ -22,6 +22,8 @@ builder.Services.AddScoped<CreditNoteService>();
 builder.Services.AddScoped<ReportService>();
 
 // --- Data Seeder (runs on startup) ---
+builder.Services.AddHostedService<DataSeeder>();
+
 var jwtSecret = builder.Configuration["Jwt:Secret"]!;
 var keyBytes = Convert.FromBase64String(jwtSecret);
 
