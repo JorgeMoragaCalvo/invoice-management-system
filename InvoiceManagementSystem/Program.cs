@@ -65,6 +65,10 @@ builder.Services.AddSwaggerGen(options =>
         Version = "1.0"
     });
 
+    // Include XML comments in Swagger (reads /// <summary>, <remarks>, <response> tags)
+    var xmlFilename = $"{System.Reflection.Assembly.GetExecutingAssembly().GetName().Name}.xml";
+    options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFilename));
+
     options.AddSecurityDefinition("bearerAuth", new OpenApiSecurityScheme
     {
         Type = SecuritySchemeType.Http,
