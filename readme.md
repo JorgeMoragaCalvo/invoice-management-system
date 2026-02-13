@@ -1,61 +1,268 @@
-# GitHub Codespaces ♥️ C#
+# Invoice Management System
 
-Want to try out C# for web development? 
+Aplicación integral de gestión de facturas desarrollada con **ASP.NET Core 8** (backend) y **React + Vite** (frontend). Este sistema permite a los usuarios gestionar facturas, crear notas de crédito y generar informes con autenticación JWT.
 
-This repo builds a Weather API, OpenAPI integration to test with [Scalar](https://learn.microsoft.com/aspnet/core/fundamentals/openapi/using-openapi-documents?view=aspnetcore-10.0#use-scalar-for-interactive-api-documentation), and displays the data in a web application using Blazor (.NET/C#).
+## 🏗️ Architecture & Design Patterns
+La aplicación sigue una **arquitectura en capas** limpia con una clara separación de preocupaciones:
+### **Controller Layer**
+RESTful API controllers handle HTTP requests and responses:
+- `AuthController` - Authentication and authorization
+- `InvoiceController` - Invoice management operations
+- `ReportController` - Report generation endpoints
 
-We've given you both a frontend and backend to play around with and where you go from here is up to you!
+### **Service Layer**
+Business logic is encapsulated in dedicated service classes:
+- `InvoiceService` - Invoice CRUD operations
+- `InvoiceLoadService` - Bulk invoice loading from JSON files
+- `CreditNoteService` - Credit note management
+- `ReportService` - Report generation and analytics
+- `JwtService` - JWT token generation and validation
 
-Everything you do here is contained within this one codespace. There is no repository on GitHub yet. If and when you’re ready you can click "Publish Branch" and we’ll create your repository and push up your project. If you were just exploring then and have no further need for this code then you can simply delete your codespace and it's gone forever.
+### **Data Access Layer**
+Entity Framework Core provides ORM capabilities:
+- **`AppDbContext`** - Database context managing all entities
+- **Entities** - Domain models (`InvoiceEntity`, `UserEntity`, `CreditNoteEntity`, etc.)
+- **Database Views** - Optimized views for reporting
 
-### Run Options
+### **Dependency Injection**
+Todos los servicios están registrados en el contenedor DI para un acoplamiento flexible y capacidad de prueba:
+```csharp
+builder.Services.AddSingleton<JwtService>();
+builder.Services.AddScoped<InvoiceService>();
+builder.Services.AddScoped<InvoiceLoadService>();
+builder.Services.AddScoped<CreditNoteService>();
+builder.Services.AddScoped<ReportService>();
+```
 
-[![Open in GitHub Codespaces](https://img.shields.io/static/v1?style=for-the-badge&label=GitHub+Codespaces&message=Open&color=lightgrey&logo=github)](https://codespaces.new/github/dotnet-codespaces)
-[![Open in Dev Container](https://img.shields.io/static/v1?style=for-the-badge&label=Dev+Container&message=Open&color=blue&logo=visualstudiocode)](https://vscode.dev/redirect?url=vscode://ms-vscode-remote.remote-containers/cloneInVolume?url=https://github.com/github/dotnet-codespaces)
+### **Security**
+JWT-based authentication with Bearer token authorization:
+- Token-based API authentication
+- BCrypt password hashing
+- Protected endpoints with `[Authorize]` attribute
 
-You can also run this repository locally by following these instructions: 
-1. Clone the repo to your local machine `git clone https://github.com/github/dotnet-codespaces`
-1. Open repo in VS Code
+### **Configuration Management**
+Application settings managed through `appsettings.json`:
+- Database connection strings
+- JWT configuration
+- Logging levels
 
-## Getting started
+### **Data Seeding**
+Automatic database initialization on startup:
+- Database schema creation
+- Admin user seeding
+- Database views for reporting
 
-1. **📤 One-click setup**: [Open a new Codespace](https://codespaces.new/github/dotnet-codespaces), giving you a fully configured cloud developer environment.
-2. **▶️ Run all, one-click again**: Use VS Code's built-in *Run* command and open the forwarded ports *8080* and *8081* in your browser. 
+---
 
-![Debug menu in VS Code showing Run All](images/RunAll.png)
+## 🛠️ Technology Stack
 
-3. The Blazor web app and Scalar can be open by heading to **/scalar** in your browser. On Scalar, head to the backend API and click "Test Request" to call and test the API. 
+### **Backend**
+- **ASP.NET Core 8** – Web API framework
+- **Entity Framework Core** - ORM with SQLite
+- **JWT Authentication** – Secure API access
+- **BCrypt.Net** – Password hashing
+- **Swagger/OpenAPI** - API documentation
 
-![A website showing weather](images/BlazorApp.png)
+### **Frontend**
+- **React 19** – UI library
+- **Vite** – Fast build tool and dev server
+- **React Router** - Client-side routing
+- **Axios** - HTTP client with interceptors
+- **Tailwind CSS** - Utility-first CSS framework
 
-!["UI showing testing an API"](images/scalar.png)
+---
+
+## 📋 Prerrequisitos
+
+- **.NET 8 SDK** - [Download here](https://dotnet.microsoft.com/download/dotnet/8.0)
+- **Node.js 18+** - [Download here](https://nodejs.org/)
+- **npm** or **yarn** - Package manager
+
+---
 
 
-4. **🔄 Iterate quickly:** Codespaces updates the server on each save, and VS Code's debugger lets you dig into the code execution.
+## 🚀 Instalación & Setup
 
-5. To stop running, return to VS Code, and click Stop twice in the debug toolbar. 
+### **1. Clone the Repository**
 
-![VS Code stop debuggin on both backend and frontend](images/StopRun.png)
+```bash
+git clone https://github.com/JorgeMoragaCalvo/invoice-management-system.git
+cd invoice-management-system
+```
 
+### **2. Backend Setup (ASP.NET Core)**
 
-## Contributing
+Navegar hasta el directorio backend y restaurar las dependencias:
 
-This project welcomes contributions and suggestions.  Most contributions require you to agree to a
-Contributor License Agreement (CLA) declaring that you have the right to, and actually do, grant us
-the rights to use your contribution. For details, visit https://cla.opensource.microsoft.com.
+```bash
+cd InvoiceManagementSystem
+dotnet restore
+```
 
-When you submit a pull request, a CLA bot will automatically determine whether you need to provide
-a CLA and decorate the PR appropriately (e.g., status check, comment). Simply follow the instructions
-provided by the bot. You will only need to do this once across all repos using our CLA.
+Ejecutar la aplicación:
 
-This project has adopted the [Microsoft Open Source Code of Conduct](https://opensource.microsoft.com/codeofconduct/).
-For more information see the [Code of Conduct FAQ](https://opensource.microsoft.com/codeofconduct/faq/) or
-contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with any additional questions or comments.
+```bash
+dotnet run
+```
 
-## Trademarks
+The backend API will start at **`http://localhost:5165`**
 
-This project may contain trademarks or logos for projects, products, or services. Authorized use of Microsoft 
-trademarks or logos is subject to and must follow 
-[Microsoft's Trademark & Brand Guidelines](https://www.microsoft.com/en-us/legal/intellectualproperty/trademarks/usage/general).
-Use of Microsoft trademarks or logos in modified versions of this project must not cause confusion or imply Microsoft sponsorship.
-Any use of third-party trademarks or logos are subject to those third-party's policies.
+#### What happens on first run:
+- SQLite database (`invoices.db`) is automatically created
+- Database tables and views are initialized
+- Admin user is seeded with default credentials
+
+### **3. Frontend Setup (React)**
+
+Navigate to the frontend directory:
+
+```bash
+cd client-app
+```
+
+Install dependencies:
+
+```bash
+npm install
+```
+
+Run the development server:
+
+```bash
+npm run dev
+```
+
+The frontend will start at **`http://localhost:5173`**
+
+---
+
+## 🔐 Credenciales
+
+Para acceder, usar las siguientes credenciales:
+
+```
+Username: admin
+Password: admin123
+```
+
+Luego, acceder al `dashboard` e ingresar el archivo `.json`.
+
+---
+
+## 📡 API Endpoints
+
+### **Authentication**
+- `POST /auth/login` - Login and receive JWT token
+- `GET /auth/validate` - Validate current JWT token
+
+### **Invoices**
+- `GET /invoices/` - Get all invoices
+- `GET /invoices/{number}` - Get invoice by number
+- `GET /invoices/status/{status}` - Filter by status (Issued, Partial, Cancelled)
+- `GET /invoices/payment/{payment}` - Filter by payment status (Pending, Paid, Overdue)
+- `POST /invoices` - Create a new invoice
+- `POST /invoices/load` - Bulk load invoices from JSON file
+- `POST /invoices/{number}/credit-notes` - Create credit note for an invoice
+
+### **Reports**
+- `GET /invoices/reports/overdue` - Invoices overdue by more than 30 days
+- `GET /invoices/reports/payment-summary` - Payment status statistics
+- `GET /invoices/reports/inconsistent` - Invoices with data inconsistencies
+
+**Interactive API Documentation:** Visit `http://localhost:5165/swagger` for Swagger UI
+
+---
+
+## 🗂️ Project Structure
+
+```diagram
+invoice-management-system/
+├── InvoiceManagementSystem/          # Backend (ASP.NET Core)
+│   ├── Controllers/                   # API endpoints
+│   ├── Services/                      # Business logic
+│   ├── Data/                          # Database context and seeding
+│   ├── Entities/                      # Database models
+│   ├── DTOs/                          # Data Transfer Objects
+│   ├── Security/                      # Authentication & authorization
+│   ├── Program.cs                     # Application entry point
+│   └── appsettings.json               # Configuration settings
+│
+├── client-app/                        # Frontend (React + Vite)
+│   ├── src/
+│   │   ├── components/                # Reusable React components
+│   │   ├── pages/                     # Page components
+│   │   ├── api/                       # API client services
+│   │   ├── auth/                      # Authentication context
+│   │   └── utils/                     # Utility functions
+│   ├── package.json                   # Dependencies
+│   └── vite.config.js                 # Vite configuration
+│
+└── README.md
+```
+
+---
+
+## 💻 Development
+
+### **Backend Development**
+
+```bash
+cd InvoiceManagementSystem
+
+# Run with hot reload
+dotnet watch run
+
+# Build the project
+dotnet build
+
+# Run in production mode
+dotnet run --configuration Release
+```
+
+### **Frontend Development**
+
+```bash
+cd client-app
+
+# Start development server with hot reload
+npm run dev
+
+# Build for production
+npm run build
+
+# Preview production build
+npm run preview
+
+# Run linter
+npm run lint
+```
+
+---
+
+## 🗄️ Database
+
+- **Type:** SQLite
+- **File:** `invoices.db` (auto-created in backend directory)
+- **Initialization:** Automatic on first startup via `DataSeeder`
+- **Views:** Optimized database views for reporting:
+    - `v_invoices_by_status` - Consistent invoices grouped by status
+    - `v_invoices_by_payment` - Invoices grouped by payment status
+    - `v_overdue_report` - Overdue invoices without payment/credit notes
+    - `v_inconsistent_invoices` - Invoices with data inconsistencies
+    - `v_payment_status_summary` - Payment statistics with percentages
+
+---
+
+## 🎯 Features
+
+- ✅ **User Authentication** – Secure JWT-based login
+- ✅ **Invoice Management** – Create, view, and filter invoices
+- ✅ **Bulk Import** – Load multiple invoices from JSON files
+- ✅ **Credit Notes** – Create credit notes for invoices
+- ✅ **Reports & Analytics** – Payment summaries and overdue reports
+- ✅ **Data Validation** - Automatic consistency checks
+- ✅ **Responsive UI** - Modern, mobile-friendly interface
+- ✅ **API Documentation** – Interactive Swagger/OpenAPI docs
+
+---
+
