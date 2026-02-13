@@ -41,4 +41,16 @@ public class AuthController : ControllerBase
         var token = _jwtService.GenerateToken(user.Username);
         return Ok(new AuthResponseDTO(token));
     }
+
+    /// <summary>
+    /// Validate JWT token
+    /// </summary>
+    [HttpGet("validate")]
+    [Authorize]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    public IActionResult Validate()
+    {
+        return Ok(new { message = "Token is valid" });
+    }
 }

@@ -47,6 +47,17 @@ builder.Services.AddAuthentication(options =>
 
 builder.Services.AddAuthorization();
 
+// --- CORS (allow React dev server) ---
+builder.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy(policy =>
+    {
+        policy.WithOrigins("http://localhost:5173")
+              .AllowAnyHeader()
+              .AllowAnyMethod();
+    });
+});
+
 // --- Controllers + JSON ---
 builder.Services.AddControllers()
     .AddJsonOptions(options =>
@@ -104,6 +115,8 @@ var app = builder.Build();
 // --- Middleware pipeline ---
 app.UseSwagger();
 app.UseSwaggerUI();
+
+app.UseCors();
 
 app.UseAuthentication();
 app.UseAuthorization();
