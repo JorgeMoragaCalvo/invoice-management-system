@@ -8,11 +8,15 @@ export default defineConfig({
     port: 5173,
     proxy: {
       '/auth': {
-        target: 'http://localhost:5000',
+        target: 'http://localhost:5165',
         changeOrigin: true,
       },
       '/invoices': {
-        target: 'http://localhost:5000',
+        target: 'http://localhost:5165',
+        changeOrigin: true,
+      },
+      '/reports': {
+        target: 'http://localhost:5165',
         changeOrigin: true,
       },
     },

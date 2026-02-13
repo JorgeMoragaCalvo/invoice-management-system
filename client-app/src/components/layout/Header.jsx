@@ -1,15 +1,28 @@
 export default function Header({ onLogout }) {
   return (
-    <div className="bg-gradient-to-r from-slate-800 to-slate-600 text-white px-8 py-6 flex items-center justify-between">
-      <div>
-        <h1 className="text-xl font-bold">Sistema de Gestión de Facturas</h1>
-        <p className="text-sm text-slate-400 mt-1">
+    <div className="bg-gradient-to-r from-blue-700 to-blue-600 text-white px-8 py-6 flex items-center justify-between shadow-lg">
+      <div className="flex-1">
+        <h1 className="text-2xl font-bold text-white">Sistema de Gestión de Facturas</h1>
+        <p className="text-sm text-blue-100 mt-2">
           Administración de facturas, notas de crédito y reportes
         </p>
       </div>
       <button
         onClick={onLogout}
-        className="px-4 py-2 text-sm border border-slate-400 rounded-lg hover:bg-slate-700 transition-colors"
+        style={{
+          backgroundColor: '#1f2937',
+          color: 'white',
+          padding: '8px 16px',
+          borderRadius: '8px',
+          fontWeight: '500',
+          fontSize: '14px',
+          border: '1px solid #374151',
+          cursor: 'pointer',
+          marginLeft: '24px',
+          transition: 'background-color 0.2s',
+        }}
+        onMouseEnter={(e) => (e.target.style.backgroundColor = '#111827')}
+        onMouseLeave={(e) => (e.target.style.backgroundColor = '#1f2937')}
       >
         Cerrar Sesión
       </button>

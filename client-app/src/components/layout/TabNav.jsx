@@ -6,15 +6,15 @@ const tabs = [
 
 export default function TabNav({ activeTab, onTabChange }) {
   return (
-    <div className="flex border-b-2 border-slate-200 px-8 bg-white">
+    <div className="flex border-b border-slate-200 px-8 bg-white shadow-sm sticky top-0 z-40">
       {tabs.map((t) => (
         <button
           key={t.key}
           onClick={() => onTabChange(t.key)}
-          className={`px-5 py-3.5 text-sm transition-all -mb-[2px] ${
+          className={`px-6 py-4 text-sm font-medium transition-all border-b-2 ${
             activeTab === t.key
-              ? 'font-bold text-blue-800 border-b-2 border-blue-800'
-              : 'text-slate-500 border-b-2 border-transparent hover:text-slate-700'
+              ? 'text-blue-600 border-blue-600'
+              : 'text-slate-600 border-transparent hover:text-slate-900 hover:border-slate-300'
           }`}
         >
           {t.label}
